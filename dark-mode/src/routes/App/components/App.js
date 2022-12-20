@@ -1,9 +1,24 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import '../styles/_app.scss';
+import {ThemeContext} from '../../../common/contexts/ThemeContext';
 
 function App() {
+  const [isLightMode, setIsLightMode] = useState(true);
+  const {theme, changeTheme} = useContext(ThemeContext);
+
+  function toggleHandler() {
+    if (isLightMode) {
+      changeTheme("dark");
+      setIsLightMode(false);
+    }
+    else {
+      changeTheme("light");
+      setIsLightMode(true);
+    }
+  }
+
   return (
     <div className="app">
       <div className="level">
@@ -12,8 +27,8 @@ function App() {
         </div>
 
         {/* --The button that should toggle dark mode-- */}
-        <button className="app__dark-mode-btn icon level-right">
-          <FontAwesomeIcon icon={faMoon} />
+        <button className="app__dark-mode-btn icon level-right" onClick={toggleHandler}>
+          <FontAwesomeIcon icon={isLightMode ? faMoon : faSun} color={isLightMode ? "" : "#FFA500"}/>
         </button>
 
       </div>
